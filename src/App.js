@@ -1,5 +1,6 @@
 import React from 'react';
 import Employees from './Employees'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

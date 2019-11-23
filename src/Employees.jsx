@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AppForm from './AppForm'
 
 class Employees extends Component {
     constructor(props){
@@ -6,13 +7,17 @@ class Employees extends Component {
         super(props);
         
         this.state={
-            
+            formVisible: false,
             isFetched: false,
             employees: {},
         };
         
     }
-   
+   handleClick(){
+    this.setState((prevState) => ({
+      formVisible: !prevState.formVisible
+  }));
+   }
     componentDidMount(){
       return  fetch("http://localhost:3004/employees")
       .then(res => res.json())
@@ -37,11 +42,12 @@ class Employees extends Component {
         return <p>Loading...</p>
       else{
           return(
+
         <div>
-            
+            <AppForm onClick={this.handleClick}/>
         {this.state.employees.map((e, ind) => { return (
 
-          <table key={ind}>
+          <table class="table" key={ind}>
             <tbody>
             <tr style={{color:this.whatColor(e.isActive)}}>
         <td>
