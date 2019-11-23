@@ -11,7 +11,8 @@ import { interfaceDeclaration } from "@babel/types";
             isVisible: false,
             name: '',
             isActive:'',
-            isValidationCorrect: true
+            isValidationCorrect: true,
+            isSubmitDisabled: false
         }
         this.handleClick = this.handleClick.bind(this);
         this.validation = this.validation.bind(this);
@@ -22,6 +23,12 @@ import { interfaceDeclaration } from "@babel/types";
         [event.target.name]:event.target.value
 
     })}
+
+    generalHandler2 = (event) => {
+        this.setState({
+        [event.target.name]:event.target.value
+        
+    },()=>this.validation(event))}
 
     cancelClick()
     {
@@ -36,8 +43,7 @@ import { interfaceDeclaration } from "@babel/types";
 
     validation = (event) =>
     {
-        event.preventDefault();
-        const r = /\d{10}/;
+        const r = /\d{9}/;
         const content = this.state.contact;
         if(this.state.age<18)
         {
@@ -77,9 +83,9 @@ import { interfaceDeclaration } from "@babel/types";
                 <ul>
                 <li>Age <input type="number" name='age' value={age} onChange={this.generalHandler}/></li>
                 <li>{(this.state.age<18)?"Parent Name":"Name"} <input type="text" name='name' value={name} onChange={this.generalHandler}/></li>
-                <li>{(this.state.age<18)?"Parent Phone No":"Email"} <input type="text" name='contact' value={contact} onChange={this.generalHandler}/></li>
+                <li>{(this.state.age<18)?"Parent Phone No":"Email"} <input type="text" name='contact' value={contact} onChange={this.generalHandler2}/></li>
                 {this.state.isValidationCorrect ? null: <label>{(this.state.age<18)?"Wrong phone number format":"Wrong email format"}</label>}
-                <input type="submit" value="Submit"/>
+                <input disabled={!this.state.isValidationCorrect} type="submit" value="Submit"/>
                 </ul>
             </form>
  <Button onClick={this.cancelClick}>Cancel</Button></div>       
